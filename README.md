@@ -6,7 +6,7 @@ A minimal, self-contained **DoH (DNS-over-HTTPS) gateway** in Go with ad filteri
 clients (browser DoH, RFC 8484)
   → Go TLS listener (your cert, e.g. Let's Encrypt DNS-01)
     → HaGeZi Light blocklist filtering (~39k domains, daily auto-update, hot reload)
-    → local empty answer for HTTPS/type65 RR (prevents ECH from breaking domain-based routing)
+    → optional local empty answer for HTTPS/type65 RR (never forwarded upstream)
     → dynamic ECS /24 injection (real client subnet preserved, RFC 7871)
     → TTL in-memory cache (ECS-partitioned)
     → Google DoH primary / Quad9 secondary (pinned dial IPs, bootstrap-independent)
@@ -18,7 +18,7 @@ clients (browser DoH, RFC 8484)
 - Token-protected DoH endpoint (`/dns/<token>`), GET + POST, per-IP rate limiting
 - Ad filtering with daily rule updates, crash-safe atomic version rotation (current/previous symlinks, automatic pruning to last 2 versions), hot reload without restart
 - Dynamic ECS injection + ECS-partitioned cache
-- Local empty answer for type65/HTTPS records — keeps ECH config records from breaking sing-box/domain-based routing
+- Optional local suppression of HTTPS/type65 records — answered locally, never forwarded to upstream resolvers
 - Pinned upstream dial IPs — immune to proxy env vars and bootstrap loops
 - systemd unit set: sandboxed service, resource slice, daily rules/cert timers
 - 61 unit tests incl. `-race`, with mutation-tested regression suites for the rotation logic

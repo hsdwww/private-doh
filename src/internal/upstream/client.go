@@ -35,7 +35,7 @@ func New(name, rawURL string, dialIPs []string, timeout time.Duration) (*Client,
 	pins := map[string][]string{net.JoinHostPort(host, "443"): dialIPs}
 	dialer := &net.Dialer{Timeout: 2 * time.Second, KeepAlive: 30 * time.Second}
 	tr := &http.Transport{
-		// Explicitly NO proxy: immune to HTTP_PROXY/10810 inheritance.
+		// Explicitly NO proxy: immune to inherited HTTP_PROXY environment.
 		Proxy: nil,
 		DialContext: func(ctx context.Context, network, addr string) (net.Conn, error) {
 			if ips, ok := pins[addr]; ok && len(ips) > 0 {

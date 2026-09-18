@@ -19,7 +19,7 @@ func jsonUnmarshalStrict(raw []byte, v interface{}) error {
 	return dec.Decode(v)
 }
 
-// noProxyTransport: never inherit environment proxies (10810 immunity).
+// noProxyTransport: never inherit environment proxy settings.
 func noProxyTransport() *http.Transport {
 	return &http.Transport{
 		Proxy: nil,

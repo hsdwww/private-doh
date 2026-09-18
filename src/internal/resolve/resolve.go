@@ -97,7 +97,7 @@ func (r *Resolver) Resolve(q *dns.Msg, clientIP net.IP) *dns.Msg {
 	r.stats.Queries.Add(1)
 	qname := strings.ToLower(strings.TrimSuffix(q.Question[0].Name, "."))
 
-	// 1. type65 policy (ECH defense), only when enabled
+	// 1. optional type65 suppression policy, only when enabled
 	if r.cfg.BlockHTTPSRR && q.Question[0].Qtype == dns.TypeHTTPS {
 		r.stats.Type65.Add(1)
 		return localPolicyReply(q, dns.RcodeSuccess, 0) // NOERROR/NODATA
