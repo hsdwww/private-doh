@@ -1,0 +1,9 @@
+[Unit]
+Description=Private DoH gateway resource slice
+Before=slices.target
+
+[Slice]
+MemoryHigh=320M
+MemoryMax=448M
+MemorySwapMax=0
+TasksMax=256

@@ -1,0 +1,10 @@
+# secrets — never commit
+config.json
+*.env
+!*.example
+# build artifacts
+private-doh
+releases/
+backups/
+toolchain/
+*.bak*

@@ -1,0 +1,14 @@
+{
+  "listen_addr": "0.0.0.0:8443",
+  "token": "REPLACE-WITH-32+-CHAR-RANDOM-TOKEN!!",
+  "tls_dir": "/var/lib/private-doh-tls",
+  "rules_dir": "/var/lib/private-doh-rules",
+  "allowlist_path": "/etc/private-doh/allowlist.txt",
+  "block_https_rr": true,
+  "filter_enabled": true,
+  "max_cache_entries": 5000,
+  "upstreams": [
+    { "name": "google", "url": "https://dns.google/dns-query", "dial_ips": ["8.8.8.8", "8.8.4.4"], "timeout_ms": 2000 },
+    { "name": "quad9", "url": "https://dns12.quad9.net/dns-query", "dial_ips": ["9.9.9.12", "149.112.112.12"], "timeout_ms": 2500 }
+  ]
+}

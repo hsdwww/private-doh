@@ -1,0 +1,4 @@
+# private-doh allowlist
+# bare domain = exact allow; *.domain = allow domain + all subdomains
+# example.com
+# *.example.net

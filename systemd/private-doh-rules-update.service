@@ -1,0 +1,23 @@
+[Unit]
+StartLimitIntervalSec=1h
+StartLimitBurst=3
+Description=Update private DoH advertising rules (HaGeZi Light)
+
+[Service]
+Restart=on-failure
+RestartSec=5min
+Type=oneshot
+User=private-doh-rules
+Group=private-doh-rules
+Slice=private-doh.slice
+ExecStart=/opt/private-doh/private-doh rules-update --config /etc/private-doh/rules-update.json
+TimeoutStartSec=120s
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/private-doh-rules
+MemoryMax=96M
+TasksMax=32
+CPUQuota=25%
+UnsetEnvironment=HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY http_proxy https_proxy all_proxy no_proxy

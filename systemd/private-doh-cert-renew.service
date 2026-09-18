@@ -1,0 +1,25 @@
+[Unit]
+StartLimitIntervalSec=1h
+StartLimitBurst=3
+Description=Renew private DoH certificate via lego (ACME DNS-01)
+
+[Service]
+Restart=on-failure
+RestartSec=5min
+TasksMax=32
+CPUQuota=25%
+Type=oneshot
+User=private-doh-acme
+Group=private-doh-acme
+Slice=private-doh.slice
+Environment=CLOUDFLARE_DNS_API_TOKEN_FILE=/var/lib/private-doh-acme/cf-token
+EnvironmentFile=/etc/private-doh/acme.env
+ExecStart=/opt/private-doh/bin/cert-renew.sh
+TimeoutStartSec=180s
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/lib/private-doh-acme /var/lib/private-doh-tls
+MemoryMax=96M
+UnsetEnvironment=HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY http_proxy https_proxy all_proxy no_proxy

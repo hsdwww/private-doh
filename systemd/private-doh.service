@@ -1,0 +1,44 @@
+[Unit]
+Description=Independent private DoH gateway (dns.example.com)
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=exec
+User=private-doh
+Group=private-doh
+Slice=private-doh.slice
+ExecStart=/opt/private-doh/private-doh serve --config /etc/private-doh/config.json
+Restart=always
+RestartSec=10s
+TimeoutStartSec=30s
+TimeoutStopSec=15s
+KillMode=control-group
+RuntimeDirectory=private-doh
+RuntimeDirectoryMode=0750
+UMask=0027
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectControlGroups=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+AmbientCapabilities=
+MemoryHigh=160M
+MemoryMax=256M
+MemorySwapMax=0
+TasksMax=128
+LimitNOFILE=4096
+CPUQuota=100%
+Environment=GOMEMLIMIT=128MiB
+UnsetEnvironment=HTTP_PROXY HTTPS_PROXY ALL_PROXY NO_PROXY http_proxy https_proxy all_proxy no_proxy
+LogRateLimitIntervalSec=30s
+LogRateLimitBurst=20
+ReadWritePaths=/run/private-doh
+
+[Install]
+WantedBy=multi-user.target

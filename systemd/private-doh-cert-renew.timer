@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily private DoH certificate renewal check
+
+[Timer]
+OnCalendar=*-*-* 02:43:00 Asia/Shanghai
+RandomizedDelaySec=5m
+Persistent=true
+Unit=private-doh-cert-renew.service
+
+[Install]
+WantedBy=timers.target
